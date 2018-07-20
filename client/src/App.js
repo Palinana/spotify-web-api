@@ -33,7 +33,8 @@ class App extends Component {
     spotifyApi.getMyCurrentPlaybackState()
       .then((response) => {
         this.setState({
-          nowPlaying: { 
+          nowPlaying: {
+              artist: response.item.artists[0].name, 
               name: response.item.name, 
               albumArt: response.item.album.images[0].url
             }
@@ -45,7 +46,9 @@ class App extends Component {
       <div className="App">
         <a href='http://localhost:8888' > Login to Spotify </a>
         <div>
-          Now Playing: { this.state.nowPlaying.name }
+          Now Playing: 
+          <h2>{ this.state.nowPlaying.artist }</h2>
+          <h3>{ this.state.nowPlaying.name }</h3>
         </div>
         <div>
           <img src={this.state.nowPlaying.albumArt} style={{ height: 150 }}/>
