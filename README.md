@@ -31,3 +31,4 @@ There are two parts to it, the auth-server, and the client.
 - Click the 'Check Now Playing' Button
 - Your currently playing song's name and album art should appear
 
+![image](https://user-images.githubusercontent.com/26104823/43011876-bde7db64-8c12-11e8-849e-275503073442.png)
