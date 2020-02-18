@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactHtmlParser from 'react-html-parser';
+import ReactHtmlParser,{ convertNodeToElement } from 'react-html-parser';
 import { parse } from 'node-html-parser';
 import './App.css';
 import axios from 'axios';
@@ -7,6 +7,19 @@ import axios from 'axios';
 import SpotifyWebApi from 'spotify-web-api-js';
 const spotifyApi = new SpotifyWebApi();
 
+// parser option
+const options = {
+  decodeEntities: true,
+  transform
+};
+// Transform <a> into <div>
+function transform(node, index) {
+  // A node can be modified and passed to the convertNodeToElement function which will continue to render it and it's children
+  if (node.type === "tag" && node.name === "a") {
+    node.name = "div";
+    return convertNodeToElement(node, index, transform);
+  }
+}
 
 class App extends Component {
   constructor(){
@@ -86,12 +99,6 @@ class App extends Component {
         })
       })
   }
-
-  transform(node) {
-    if (node.type === 'tag' && node.name === 'b') {
-      return <div>This was a bold tag</div>;
-    }
-  }
   
   render() {
     return (
@@ -111,7 +118,7 @@ class App extends Component {
           </button>
         }
         {
-          this.state.result && <div>{ ReactHtmlParser(this.state.result) }</div>
+          this.state.result && <div>{ ReactHtmlParser(this.state.result, options) }</div>
         }
       </div>
     );
