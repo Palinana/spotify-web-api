@@ -26,10 +26,13 @@ class App extends Component {
     super();
     const params = this.getHashParams();
     const token = params.access_token;
+
     if (token) {
       spotifyApi.setAccessToken(token);
     }
+
     this.state = {
+      error: "",
       result: "",
       loggedIn: token ? true : false,
       nowPlaying: { name: 'Not Checked', albumArt: '' },
@@ -57,12 +60,13 @@ class App extends Component {
       .then((response) => {
         artist = response.item.artists[0].name, 
         song = response.item.name
-
+        
         this.setState({
           nowPlaying: {
               artist: response.item.artists[0].name, 
               name: response.item.name, 
-              albumArt: response.item.album.images[0].url
+              albumArt: response.item.album.images[0].url,
+              error: ""
             }
         });
       })
@@ -94,8 +98,15 @@ class App extends Component {
               .then((res) => {
                 const html = res.data;
                 var lyrics = parse(html).querySelector('.lyrics');
-                this.setState({result: lyrics})
+                this.setState({result: lyrics, error: ""})
               }) 
+        })
+        
+      })
+      .catch(err => {
+        console.log("ERROR: " + err);
+        this.setState({
+          error: err
         })
       })
   }
@@ -103,23 +114,49 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <a href='http://localhost:8888' > Login to Spotify </a>
-        <div>
-          Now Playing: 
-          <h2>{ this.state.nowPlaying.artist }</h2>
-          <h3>{ this.state.nowPlaying.name }</h3>
+        <div className="App-Row" id="top">
+          <div className="App-Login">
+            <button onClick={() => this.getNowPlaying()}>
+              <a href='http://localhost:8888'> 
+                Login to Spotify 
+              </a>
+            </button>
+          </div>
+          
+          { this.state.nowPlaying.artist && (
+            <div className="App-Artist">
+              <div className="App-Artist-Info">
+                <div>Now Playing:</div> 
+              </div>
+              <div className="App-Artist-Cover">
+                <img src={this.state.nowPlaying.albumArt} style={{ height: 150 }}/>
+              </div>
+              
+              <div>
+                <h2 className="App-Artist-Current">{ this.state.nowPlaying.artist }</h2>
+                <h4 className="App-Artist-Song">{ this.state.nowPlaying.name }</h4>
+              </div>
+            </div>
+          )}
+          
+          {
+            this.state.error && <div className="App-Error">Session has expired. Please login to your Spotify account and start playing a song</div>
+          }
+          
+          { this.state.loggedIn &&
+            <div className="App-Check-Current">
+              <button onClick={() => this.getNowPlaying()}>
+                Check Now Playing
+              </button>
+            </div>
+          }
         </div>
-        <div>
-          <img src={this.state.nowPlaying.albumArt} style={{ height: 150 }}/>
+        
+        <div className="App-Row" id="bottom">
+          {
+            this.state.result && <div className="App-Lyrics">{ ReactHtmlParser(this.state.result, options) }</div>
+          }
         </div>
-        { this.state.loggedIn &&
-          <button onClick={() => this.getNowPlaying()}>
-            Check Now Playing
-          </button>
-        }
-        {
-          this.state.result && <div>{ ReactHtmlParser(this.state.result, options) }</div>
-        }
       </div>
     );
   }
