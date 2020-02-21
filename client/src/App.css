@@ -89,9 +89,17 @@
   border: 1px solid #FFFFFF;
 }
 
+.App-Error {
+  width: 50%;
+  margin: 1rem auto 1.2rem;
+  padding: 1rem;
+  background: #CD1A2B;
+  color: #ffffff;
+}
+
 .App-Lyrics {
   color: #B3B3B3;
   font-weight: 400;
   margin: 1rem;
-
+  line-height: 27px;
 }
