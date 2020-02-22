@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import ReactHtmlParser,{ convertNodeToElement } from 'react-html-parser';
+import axios from 'axios';
 import { parse } from 'node-html-parser';
 import './App.css';
-import axios from 'axios';
 
 import SpotifyWebApi from 'spotify-web-api-js';
 const spotifyApi = new SpotifyWebApi();
@@ -110,7 +110,7 @@ class App extends Component {
         })
       })
   }
-  
+ 
   render() {
     return (
       <div className="App">
