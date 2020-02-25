@@ -5,12 +5,11 @@
 }
 
 .App-Row {
-  /* flex: 1; */
   text-align: center;
 }
 
 #top {
-  background: #383636;
+  background-image: linear-gradient(#5d5e5f, #121212);
 }
 
 #bottom {
@@ -18,7 +17,7 @@
 }
 
 .App-Login {
-  margin: 1rem;
+  margin: 1.5rem;
 }
 
 .App-Login button {
@@ -43,14 +42,15 @@
   color: white;
 }
 
-.App-Artist-Info:first-child {
+.App-Playing {
   color: #B3B3B3;
   font-weight: 400;
   margin: 1rem 0;
+  text-transform: uppercase;
 }
 
-.App-Artist-Info:last-child {
-  margin: 1rem 0;
+.App-Artist-Info {
+  margin: 1rem;
 }
 
 .App-Artist-Current {
@@ -61,7 +61,7 @@
 .App-Artist-Song {
   color: #B3B3B3;
   font-weight: 400;
-  margin: .3rem 0 .7rem 0;
+  margin: .5rem 0 0 0;
 }
 
 .App-Artist-Cover img {
@@ -69,7 +69,7 @@
 }
 
 .App-Check-Current {
-  margin: .7rem 0 1rem 0;
+  margin: 1.5rem 0 1.5rem 0;
 }
 
 .App-Check-Current button {
@@ -100,6 +100,6 @@
 .App-Lyrics {
   color: #B3B3B3;
   font-weight: 400;
-  margin: 1rem;
+  margin: 1.3rem;
   line-height: 27px;
 }

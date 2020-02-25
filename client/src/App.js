@@ -4,6 +4,9 @@ import axios from 'axios';
 import { parse } from 'node-html-parser';
 import './App.css';
 
+import { getAverageRGB } from './image';
+import logo from './logo.svg';
+
 import SpotifyWebApi from 'spotify-web-api-js';
 const spotifyApi = new SpotifyWebApi();
 
@@ -98,10 +101,12 @@ class App extends Component {
               .then((res) => {
                 const html = res.data;
                 var lyrics = parse(html).querySelector('.lyrics');
-                this.setState({result: lyrics, error: ""})
+                this.setState({result: lyrics, error: ""}, () => {
+                  console.log('ref ', this.imgRef)
+                // let result = getAverageRGB(this.imgRef)
+                })
               }) 
         })
-        
       })
       .catch(err => {
         console.log("ERROR: " + err);
@@ -110,8 +115,10 @@ class App extends Component {
         })
       })
   }
- 
+
+
   render() {
+   
     return (
       <div className="App">
         <div className="App-Row" id="top">
@@ -125,14 +132,15 @@ class App extends Component {
           
           { this.state.nowPlaying.artist && (
             <div className="App-Artist">
-              <div className="App-Artist-Info">
+              <div className="App-Playing">
                 <div>Now Playing:</div> 
               </div>
+
               <div className="App-Artist-Cover">
-                <img src={this.state.nowPlaying.albumArt} style={{ height: 150 }}/>
+                <img ref={node => {this.imgRef = node}} crossOrigin="anonymous" src={this.state.nowPlaying.albumArt} style={{ height: 250 }}/>
               </div>
               
-              <div>
+              <div className="App-Artist-Info">
                 <h2 className="App-Artist-Current">{ this.state.nowPlaying.artist }</h2>
                 <h4 className="App-Artist-Song">{ this.state.nowPlaying.name }</h4>
               </div>
