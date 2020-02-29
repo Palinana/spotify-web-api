@@ -74,19 +74,33 @@ class App extends Component {
         });
       })
       .then((response) => {      
-        if(artist.length > 1) artist = artist.replace(/\s+/g, '%20').toLowerCase();
+        if(artist.length > 1) {
+          // removing special characters
+          artist = artist.replace(/[\/\\#+$✝~%*<>{}]/g, '');
+          // replacing artist spaces with %20
+          artist = artist.replace(/\s+/g, '%20').toLowerCase();
+        }
     
         // make different requests if sees - in the name; had to remove it
         if(song.indexOf("-") !== -1){
-          song = song.substring(0,song.indexOf("-") - 1);
+          // cutting string
+          song = song.substring(0, song.indexOf("-") - 1);
         }
         
-        song = song.replace(/\s+/g, '%20').toLowerCase();
+        if (song.indexOf("(") || song.indexOf("/")) {
+          // cutting string
+          song = song.slice(0, song.indexOf("(") || song.indexOf("/"));
+        }
 
+        // replacing song spaces with %20
+        song = song.replace(/\s+/g, '%20').toLowerCase();
+        // console.log('artist', artist);
+        // console.log('song', song);
+        // console.log('link', `https://api.genius.com/search?q=${artist}%20${song}`);
         axios.get(`https://api.genius.com/search?q=${artist}%20${song}&client_id=${process.env.REACT_APP_GENIUS_API_CLIENT_KEY}&client_secret=${process.env.REACT_APP_GENIUS_API_CLIENT_SECRET}&access_token=${process.env.REACT_APP_ACCESS_TOKEN}`)
           .then((res) =>{
             let lyricsURL = res.data.response.hits[0].result.url;
-            // console.log('RESPONSE', res.data.response.hits[0].result.url);  
+            console.log('RESPONSE', res.data.response);  
             // console.log('artist', artist);  
             // console.log('song', song);
             // console.log('responce', res.data.response);
@@ -100,9 +114,15 @@ class App extends Component {
             })
               .then((res) => {
                 const html = res.data;
+                var lyrics;
+                
+                // if(!lyricsURL.includes(song.slice(0, song.indexOf("%")))){
+                //   lyricsURL = `Sorry, couldn't find that song`;
+                // }
+
                 var lyrics = parse(html).querySelector('.lyrics');
                 this.setState({result: lyrics, error: ""}, () => {
-                  console.log('ref ', this.imgRef)
+                  // console.log('ref ', this.imgRef)
                 // let result = getAverageRGB(this.imgRef)
                 })
               }) 
