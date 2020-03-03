@@ -63,7 +63,7 @@ class App extends Component {
       .then((response) => {
         artist = response.item.artists[0].name, 
         song = response.item.name
-        
+
         this.setState({
           nowPlaying: {
               artist: response.item.artists[0].name, 
@@ -86,17 +86,32 @@ class App extends Component {
           // cutting string
           song = song.substring(0, song.indexOf("-") - 1);
         }
-        
-        if (song.indexOf("(") || song.indexOf("/")) {
-          // cutting string
-          song = song.slice(0, song.indexOf("(") || song.indexOf("/"));
-        }
 
+        if (song.indexOf("(") !== -1 || song.indexOf("/") !== -1 ) {
+          // cutting string 
+          if (song.indexOf("/") !== -1) {            
+            let ind = song.indexOf("/"); //saving index
+            if (song[ind-1] === ' ') {
+              song = song.slice(0, song.indexOf("/")-1); //cutting if there is a space
+            }
+            else {
+              song = song.slice(0, song.indexOf("/")+1) //cutting without a space
+            };
+          }
+          if (song.indexOf("(") !== -1){
+            let ind = song.indexOf("("); //saving index
+            if (song[ind-1] === ' ') {
+              song = song.slice(0, song.indexOf("(")-1); //cutting if there is a space
+            }
+            else {
+              song = song.slice(0, song.indexOf("(")+1) //cutting without a space
+            };
+          }
+        }
+        
         // replacing song spaces with %20
         song = song.replace(/\s+/g, '%20').toLowerCase();
-        // console.log('artist', artist);
-        // console.log('song', song);
-        // console.log('link', `https://api.genius.com/search?q=${artist}%20${song}`);
+
         axios.get(`https://api.genius.com/search?q=${artist}%20${song}&client_id=${process.env.REACT_APP_GENIUS_API_CLIENT_KEY}&client_secret=${process.env.REACT_APP_GENIUS_API_CLIENT_SECRET}&access_token=${process.env.REACT_APP_ACCESS_TOKEN}`)
           .then((res) =>{
             let lyricsURL = res.data.response.hits[0].result.url;
@@ -114,13 +129,32 @@ class App extends Component {
             })
               .then((res) => {
                 const html = res.data;
-                var lyrics;
-                
-                // if(!lyricsURL.includes(song.slice(0, song.indexOf("%")))){
-                //   lyricsURL = `Sorry, couldn't find that song`;
-                // }
+                let lyrics;
+                let index;
+                let wordInSong;
+                let splittedURL = lyricsURL.split("-"); // making an array from url 
 
-                var lyrics = parse(html).querySelector('.lyrics');
+                if(song.indexOf("%") !== -1) { // true
+                  index = song.lastIndexOf("%");
+                  wordInSong = song.slice(index+3).replace(/[\/\\']/g, '');
+                }
+                else {
+                  index = song.length+1;
+                  wordInSong = song.slice(0, index).replace(/[\/\\']/g, '');
+                }
+
+                console.log('splittedURL ', splittedURL)
+                console.log('wordInSong ', wordInSong)
+                console.log('splittedURL.includes(wordInSong) ', splittedURL.includes(wordInSong))
+                // checking if responce url contains a word from current sing 
+                if(!splittedURL.includes(wordInSong)){
+                  lyrics = `Sorry, couldn't find any lyrics`;
+                }
+                else {
+                  // getting lyrics from the responce html
+                  lyrics = parse(html).querySelector('.lyrics');
+                }
+
                 this.setState({result: lyrics, error: ""}, () => {
                   // console.log('ref ', this.imgRef)
                 // let result = getAverageRGB(this.imgRef)
