@@ -15,6 +15,7 @@ const options = {
   decodeEntities: true,
   transform
 };
+
 // Transform <a> into <div>
 function transform(node, index) {
   // A node can be modified and passed to the convertNodeToElement function which will continue to render it and it's children
@@ -42,15 +43,22 @@ class App extends Component {
       accessToken: `client_id=${process.env.REACT_APP_GENIUS_API_CLIENT_KEY}&client_secret=${process.env.REACT_APP_GENIUS_API_CLIENT_SECRET}&access_token=${process.env.REACT_APP_ACCESS_TOKEN}`
     }
   }
+  
+  componentDidMount() {
+    let interval = setInterval(() => {
+      this.getNowPlaying()
+      console.log("waiting for the next call.");
+    }, 10000);
+  }
 
   getHashParams() {
     var hashParams = {};
     var e, r = /([^&;=]+)=?([^&;]*)/g,
-        q = window.location.hash.substring(1);
+      q = window.location.hash.substring(1);
     e = r.exec(q)
     while (e) {
-       hashParams[e[1]] = decodeURIComponent(e[2]);
-       e = r.exec(q);
+      hashParams[e[1]] = decodeURIComponent(e[2]);
+      e = r.exec(q);
     }
     return hashParams;
   }
@@ -98,28 +106,30 @@ class App extends Component {
               song = song.slice(0, song.indexOf("/")+1) //cutting without a space
             };
           }
+
           if (song.indexOf("(") !== -1){
-            let ind = song.indexOf("("); //saving index
-            if (song[ind-1] === ' ') {
-              song = song.slice(0, song.indexOf("(")-1); //cutting if there is a space
+            if (song[0] !== "(") { //if first element is not '('
+              let ind = song.indexOf("("); //saving index
+              if (song[ind-1] === ' ') {
+                song = song.slice(0, song.indexOf("(")-1); //cutting if there is a space
+              }
+              else {
+                song = song.slice(0, song.indexOf("(")+1) //cutting without a space
+              };
             }
-            else {
-              song = song.slice(0, song.indexOf("(")+1) //cutting without a space
-            };
           }
         }
-        
+      
+        //if first element is '(' or any other
+        song = song.replace(/[\/\\#+$✝~%*<>{}().]/g, '');
         // replacing song spaces with %20
         song = song.replace(/\s+/g, '%20').toLowerCase();
 
         axios.get(`https://api.genius.com/search?q=${artist}%20${song}&client_id=${process.env.REACT_APP_GENIUS_API_CLIENT_KEY}&client_secret=${process.env.REACT_APP_GENIUS_API_CLIENT_SECRET}&access_token=${process.env.REACT_APP_ACCESS_TOKEN}`)
           .then((res) =>{
             let lyricsURL = res.data.response.hits[0].result.url;
-            console.log('RESPONSE', res.data.response);  
-            // console.log('artist', artist);  
-            // console.log('song', song);
+            // console.log('RESPONSE', res.data.response);  
             // console.log('responce', res.data.response);
-            // console.log('lyricsURL', lyricsURL);
 
             axios.get(`https://cors-anywhere.herokuapp.com/` + lyricsURL, {
               headers: {
@@ -169,7 +179,6 @@ class App extends Component {
         })
       })
   }
-
 
   render() {
    
