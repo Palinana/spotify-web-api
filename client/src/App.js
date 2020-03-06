@@ -46,10 +46,10 @@ class App extends Component {
   }
   
   componentDidMount() {
-    let interval = setInterval(() => {
-      this.getNowPlaying()
-      console.log("waiting for the next call.");
-    }, 10000);
+    // let interval = setInterval(() => {
+    //   this.getNowPlaying()
+    //   console.log("waiting for the next call.");
+    // }, 10000);
   }
 
   getHashParams() {
