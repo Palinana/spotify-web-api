@@ -124,10 +124,6 @@ class App extends Component {
           //if first element is '(' or any other
           song = song.replace(/[\/\\#+$✝~%*<>{}().]/g, '');
 
-          console.log('this.state.previousSong ----->', this.state.previousSong.toLowerCase())
-          console.log('now playing --->', song.toLowerCase())
-          console.log('comparing  --->', this.state.previousSong.toLowerCase() !== song.toLowerCase())
-
           //CONDITION for interval to stop sending requests to genius
           if (this.state.previousSong.toLowerCase() !== song.toLowerCase() || 
             this.state.previousSong === '') { 
@@ -138,7 +134,6 @@ class App extends Component {
             axios.get(`https://api.genius.com/search?q=${artist}%20${song}&client_id=${process.env.REACT_APP_GENIUS_API_CLIENT_KEY}&client_secret=${process.env.REACT_APP_GENIUS_API_CLIENT_SECRET}&access_token=${process.env.REACT_APP_ACCESS_TOKEN}`)
               .then((res) =>{
                 let lyricsURL = res.data.response.hits[0].result.url;
-                // console.log('responce', res.data.response);
 
                 axios.get(`https://cors-anywhere.herokuapp.com/` + lyricsURL, {
                   headers: {
@@ -162,9 +157,6 @@ class App extends Component {
                       wordInSong = song.slice(0, index).replace(/[\/\\']/g, '');
                     }
 
-                    console.log('splittedURL ', splittedURL)
-                    console.log('wordInSong ', wordInSong)
-                    console.log('splittedURL.includes(wordInSong) ', splittedURL.includes(wordInSong))
                     // checking if responce url contains a word from current sing 
                     if(!splittedURL.includes(wordInSong)){
                       lyrics = `Sorry, couldn't find any lyrics`;
@@ -177,7 +169,7 @@ class App extends Component {
                     this.setState({
                       result: lyrics, 
                       previousSong: song.replace(/%20/g, " "), 
-                      error: ""}, () => {
+                      error: "" }, () => {
                       // console.log('ref ', this.imgRef)
                       // let result = getAverageRGB(this.imgRef)
                     })
