@@ -22,3 +22,7 @@ yarn-debug.log*
 yarn-error.log*
 
 *ignore.jsx
+
+# APIs
+.env
+secrets.js
