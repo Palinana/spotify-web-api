@@ -11,7 +11,7 @@
     "request": "~2.34.0"
   },
   "scripts": {
-    "start": "node authorization_code/app.js",
+    "start": "node ./auth-server/authorization_code/app.js",
     "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   }
 }
