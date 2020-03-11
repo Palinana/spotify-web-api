@@ -16,9 +16,17 @@ const options = {
   transform
 };
 
-// Transform <a> into <div>
+/**
+ * Transform <a> into <div>
+ * @param  {number} index The index of the current node
+ * @param  {obejct} node A DOM node
+ * @return {function} The function that takes params and 
+ * current funstion to transform all a tags to divs
+ */
 function transform(node, index) {
-  // A node can be modified and passed to the convertNodeToElement function which will continue to render it and it's children
+  /* A node can be modified and passed to the convertNodeToElement 
+    function which will continue to render it and it's children
+  */ 
   if (node.type === "tag" && node.name === "a") {
     node.name = "div";
     return convertNodeToElement(node, index, transform);
@@ -46,6 +54,8 @@ class App extends Component {
   }
   
   componentDidMount() {
+    /* Auto calls for current song */
+
     // let interval = setInterval(() => {
     //   this.getNowPlaying()
     //   console.log("waiting for the next call.");
@@ -68,6 +78,7 @@ class App extends Component {
     let artist = '';
     let song = '';
 
+    //getting current song
     spotifyApi.getMyCurrentPlaybackState()
       .then((response) => {
         artist = response.item.artists[0].name, 
@@ -121,10 +132,10 @@ class App extends Component {
             }
           }
         
-          //if first element is '(' or any other
+          // if first element is '(' or any other
           song = song.replace(/[\/\\#+$✝~%*<>{}().]/g, '');
 
-          //CONDITION for interval to stop sending requests to genius
+          // CONDITION for interval to stop sending requests to genius
           if (this.state.previousSong.toLowerCase() !== song.toLowerCase() || 
             this.state.previousSong === '') { 
 
