@@ -2,6 +2,7 @@ var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
+const PORT = process.env.PORT || 8888;
 require('dotenv').config();
 
 var redirect_uri = 'http://localhost:8888/callback'; 
@@ -133,5 +134,6 @@ app.get('/refresh_token', function(req, res) {
   });
 });
 
-console.log('Listening on 8888');
-app.listen(8888);
+app.listen(process.env.PORT || PORT, () => {
+  console.log(`listening on PORT ${PORT}`);
+});
