@@ -8,7 +8,6 @@ require('dotenv').config();
 var redirect_uri = 'http://localhost:8888/callback'; 
 var client_id = process.env.API_SPOTIFY_CLIENT_ID;
 var client_secret = process.env.API_SPOTIFY_CLIENT_SECRET;
-
 /**
  * Generates a random string containing numbers and letters
  * @param  {number} length The length of the string
