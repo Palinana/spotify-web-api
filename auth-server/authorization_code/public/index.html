@@ -60,10 +60,13 @@
     </script>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
-    <script
+    <!-- <script
       src="https://code.jquery.com/jquery-3.4.1.min.js"
       integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-      crossorigin="anonymous"></script>
+      crossorigin="anonymous">
+    </script> -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
     <script>
       (function() {
 
@@ -95,6 +98,8 @@
             refresh_token = params.refresh_token,
             error = params.error;
 
+        console.log('params:  ', params);
+        console.log('error ', error);
         if (error) {
           alert('There was an error during the authentication');
         } else {
