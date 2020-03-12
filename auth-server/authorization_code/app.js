@@ -6,10 +6,9 @@ const PORT = process.env.PORT || 8888;
 require('dotenv').config();
 
 var redirect_uri = 'http://localhost:8888/callback'; 
-var client_id = process.env.API_SPOTIFY_CLIENT_ID;
-var client_secret = process.env.API_SPOTIFY_CLIENT_SECRET;
+var client_id = 'bce8800b1c4c4e08a7f846d654ededbd';
+var client_secret = 'b0a731b38305483ea380b382399da5f7';
 
-console.log('client_id : ', client_id);
 /**
  * Generates a random string containing numbers and letters
  * @param  {number} length The length of the string
