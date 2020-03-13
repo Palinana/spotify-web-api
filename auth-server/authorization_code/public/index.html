@@ -93,15 +93,11 @@
             oauthPlaceholder = document.getElementById('oauth');
 
         var params = getHashParams();
-        console.log('params  : ', params);
 
         var access_token = params.access_token,
             refresh_token = params.refresh_token,
             error = params.error;
         
-        console.log('access_token  : ', access_token);
-        console.log('refresh_token  : ', refresh_token);
-
         if (error) {
           alert('There was an error during the authentication');
         } else {
