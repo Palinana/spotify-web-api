@@ -36,6 +36,9 @@ app.get('/login', function(req, res) {
   var state = generateRandomString(16);
   res.cookie(stateKey, state);
 
+  console.log('state here : ', state);
+  console.log('client_id : ', client_id);
+
   // your application requests authorization
   var scope = 'user-read-private user-read-email user-read-playback-state';
   res.redirect('https://accounts.spotify.com/authorize?' +
