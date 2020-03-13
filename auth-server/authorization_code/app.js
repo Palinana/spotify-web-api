@@ -2,7 +2,8 @@ var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
-const PORT = process.env.PORT || 8888;
+var path = require('path');
+var PORT = process.env.PORT || 8888;
 require('dotenv').config();
 
 var redirect_uri = 'http://localhost:8888/callback'; 
@@ -32,13 +33,15 @@ var app = express();
 app.use(express.static(path.join(__dirname, '..', 'public')))
   .use(cookieParser());
 
+// sends index.html
+app.use('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public/index.html'))
+})
+
 app.get('/login', function(req, res) {
 
   var state = generateRandomString(16);
   res.cookie(stateKey, state);
-
-  console.log('state here : ', state);
-  console.log('client_id : ', client_id);
 
   // your application requests authorization
   var scope = 'user-read-private user-read-email user-read-playback-state';
