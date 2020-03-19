@@ -4,7 +4,7 @@
   "description": "lyrics app",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "node server/index.js",
     "build-client": "webpack",
     "build-client-watch": "webpack -w",
     "server": "nodemon server/index.js",
