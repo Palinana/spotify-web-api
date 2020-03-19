@@ -1,11 +1,12 @@
+/* eslint-disable */
+
 import React, { Component } from 'react';
 import ReactHtmlParser,{ convertNodeToElement } from 'react-html-parser';
 import axios from 'axios';
 import { parse } from 'node-html-parser';
 import './App.css';
 
-import { getAverageRGB } from './image';
-import logo from './logo.svg';
+// import { getAverageRGB } from './image';
 
 import SpotifyWebApi from 'spotify-web-api-js';
 const spotifyApi = new SpotifyWebApi();
