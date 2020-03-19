@@ -38,11 +38,11 @@ if (process.env.NODE_ENV === 'production') {
     app.use(express.static(__dirname + '/public'))
      .use(cookieParser());
 
-    app.use(express.static(path.join(__dirname, '../public')));
+    // app.use(express.static(path.join(__dirname, '../public')));
 
-    app.use('*', (req, res, next) => {
-      res.sendFile(path.join(__dirname, '../client/public/index.html'));
-    });
+    // app.use('*', (req, res, next) => {
+    //   res.sendFile(path.join(__dirname, '../client/public/index.html'));
+    // });
   
     app.use((err, req, res, next) => {
       console.error(err);
