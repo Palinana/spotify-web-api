@@ -76,6 +76,8 @@ class App extends Component {
   }
 
   getNowPlaying(){
+    // this.gettingIt();
+
     let artist = '';
     let song = '';
 
@@ -197,6 +199,19 @@ class App extends Component {
       })
   }
 
+  // async gettingIt (){
+  //   console.log("in here");
+  //   const response = await fetch('http://localhost:8888/login');
+  //   console.log("response ", response.data)
+
+  //   axios.get(`https://cors-anywhere.herokuapp.com/` + '/login', {
+  //     headers: {
+  //       'Access-Control-Allow-Origin' : '*',
+  //       'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
+  //     }
+  //   })
+  // }
+
   render() {
    
     return (
@@ -207,6 +222,9 @@ class App extends Component {
               <a href='http://localhost:8888'> 
                 Login to Spotify 
               </a>
+              {/* <button onClick={this.getLog()}> 
+                Login to Spotify 
+              </button> */}
             </button>
           </div>
           

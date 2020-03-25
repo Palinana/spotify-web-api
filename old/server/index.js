@@ -6,6 +6,7 @@ const morgan = require('morgan');
 var request = require('request'); 
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
+var cors = require('cors');
 
 require('dotenv').config();
 var redirect_uri = 'http://localhost:8888/callback'; 
@@ -36,11 +37,36 @@ if (process.env.NODE_ENV === 'production') {
     app.use(express.static('server/public/index.html'));
     
 } else {
-    app.use(express.static(__dirname + '/public'))
-     .use(cookieParser());
+    // app.use(express.static(__dirname + '/public'))
+    //   .use(cors()) 
+    //   .use(cookieParser());
 
+    // app.get('*', (req, res, next) => {
+    //   res.sendFile(path.join(__dirname, '../client/public/index.html'));
+    // });
+    // app.get('/', function(req, res) {
+    //     res.sendFile(path.join(__dirname + '/index.html'));
+    // });
+
+    // Serve any static files
+    app.use(express.static(path.join(__dirname, 'client/build')));
+
+    // Handle React routing, return all requests to React app
+    // app.get('*', function(req, res) {
+    //   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+    // });
+    app.get('/', function(req, res) {
+        res.sendFile(path.join(__dirname + 'index.html'));
+    });
+    
     // app.use(express.static(path.join(__dirname, '../public')));
 
+    // app.get('*', (req, res, next) => {
+    //   res.sendFile(path.join(__dirname, '../client/public/index.html'));
+    // });
+    // app.get("/", (req, res) => {
+    //     res.status(200).sendFile(path.resolve(__dirname, "public", "index.html"));
+    // });
     // app.use('*', (req, res, next) => {
     //   res.sendFile(path.join(__dirname, '../client/public/index.html'));
     // });
@@ -53,6 +79,7 @@ if (process.env.NODE_ENV === 'production') {
   }
 
 app.get('/login', function(req, res) {
+    console.log('in here now ')
     var state = generateRandomString(16);
     res.cookie(stateKey, state);
   
@@ -70,7 +97,7 @@ app.get('/login', function(req, res) {
 });
 
 app.get('/callback', function(req, res) {
-
+    console.log('redirected here ')
     // your application requests refresh and access tokens
     // after checking the state parameter
   
@@ -114,7 +141,7 @@ app.get('/callback', function(req, res) {
           request.get(options, function(error, response, body) {
             console.log(body);
           });
-  
+          console.log('refresh_token here !! ', refresh_token);
           // we can also pass the token to the browser to make requests from there
           res.redirect('http://localhost:3000/#' +
             querystring.stringify({
@@ -132,7 +159,7 @@ app.get('/callback', function(req, res) {
   });
   
   app.get('/refresh_token', function(req, res) {
-  
+    console.log('finally with refresh_token here !! ', refresh_token);
     // requesting access token from refresh token
     var refresh_token = req.query.refresh_token;
     var authOptions = {
