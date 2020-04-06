@@ -4,7 +4,8 @@ const morgan = require("morgan");
 const compression = require("compression");
 const session = require("express-session");
 
-var request = require("request"); // "Request" library
+require("dotenv").config();
+var request = require("request");
 var querystring = require("querystring");
 var cookieParser = require("cookie-parser");
 const PORT = process.env.PORT || 8888;
@@ -13,8 +14,8 @@ const app = express();
 module.exports = app;
 
 var redirect_uri = "https://spotify-genius-lyrics.herokuapp.com/callback";
-var client_id = "bce8800b1c4c4e08a7f846d654ededbd";
-var client_secret = "b0a731b38305483ea380b382399da5f7";
+var client_id = process.env.CLIENT_ID;
+var client_secret = process.env.CLIENT_SECRET;
 
 /**
  * Generates a random string containing numbers and letters
@@ -33,13 +34,6 @@ var generateRandomString = function(length) {
 };
 
 var stateKey = "spotify_auth_state";
-
-// This is a global Mocha hook, used for resource cleanup.
-// Otherwise, Mocha v4+ never quits after tests.
-if (process.env.NODE_ENV === "test") {
-  after("close the session store", () => sessionStore.stopExpiringSessions());
-}
-
 
 const createApp = () => {
   // logging middleware
@@ -67,12 +61,7 @@ const createApp = () => {
       "Access-Control-Allow-Headers",
       "X-Requested-With,content-type"
     );
-
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
     res.setHeader("Access-Control-Allow-Credentials", true);
-
-    // Pass to next layer of middleware
     next();
   });
 
