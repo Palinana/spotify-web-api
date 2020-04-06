@@ -144,7 +144,7 @@ const createApp = () => {
 
           // we can also pass the token to the browser to make requests from there
           res.redirect(
-            "http://localhost:8888/#" +
+            "https://spotify-genius-lyrics.herokuapp.com/#" +
               querystring.stringify({
                 access_token: access_token,
                 refresh_token: refresh_token
