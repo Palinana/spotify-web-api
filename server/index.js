@@ -12,7 +12,7 @@ const app = express();
 
 module.exports = app;
 
-var redirect_uri = "http://localhost:8888/callback";
+var redirect_uri = "https://spotify-genius-lyrics.herokuapp.com/callback";
 var client_id = "bce8800b1c4c4e08a7f846d654ededbd";
 var client_secret = "b0a731b38305483ea380b382399da5f7";
 
