@@ -6,19 +6,16 @@
   },
   "main": "index.js",
   "scripts": {
-    "build-client": "webpack",
+    "build": "webpack --mode production",
     "build-client-watch": "webpack -w",
-    "deploy": "script/deploy",
-    "heroku-token": "script/encrypt-heroku-auth-token.js",
-    "prepare": "if [ -d .git ]; then npm-merge-driver install; fi",
-    "prettify": "prettier --write \"**/*.{js,jsx,json,css,scss,md}\"",
     "start": "node server",
     "start-dev":
       "NODE_ENV='development' npm run build-client-watch & NODE_ENV='development' npm run start-server",
     "start-server":
       "nodemon server -e html,js,scss --ignore public --ignore client",
     "test":
-      "NODE_ENV='test' mocha \"./server/**/*.spec.js\" \"./client/**/*.spec.js\" \"./script/**/*.spec.js\" --require @babel/polyfill --require @babel/register"
+      "NODE_ENV='test' mocha \"./server/**/*.spec.js\" \"./client/**/*.spec.js\" \"./script/**/*.spec.js\" --require @babel/polyfill --require @babel/register",
+    "heroku-postbuild": "webpack -p --config ./webpack.config.js --progress"
   },
 
   "lint-staged": {
