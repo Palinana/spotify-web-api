@@ -155,13 +155,19 @@ app.get("/refresh_token", function(req, res) {
 
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
+   // Serve any static files
+   app.use(express.static(path.join(__dirname, 'client/build')));
+    
+   // Handle React routing, return all requests to React app
+   app.get('*', function(req, res) {
+     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+   });
   
 } else {
-  app.use(express.static(path.join(__dirname, '../public')));
+  app.use(express.static(path.join(__dirname, 'client/build')));
 
-  app.use('*', (req, res, next) => {
-    res.sendFile(path.join(__dirname, '../client/public/index.html'));
+  app.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
   });
 
   app.use((err, req, res, next) => {

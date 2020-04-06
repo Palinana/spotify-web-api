@@ -12,7 +12,7 @@
     "start-dev": "webpack -w & nodemon server/index.js",
     "seed": "node script/seed.js",
     "test": "mocha ./server/**/*.spec.js ./server/**/**/*.spec.js",
-    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
+    "heroku-postbuild": "cd client && npm install && npm install --only=dev && npm run build"
   },
   "repository": {
     "type": "git"
