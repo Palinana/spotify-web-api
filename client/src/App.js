@@ -221,7 +221,7 @@ class App extends Component {
         <div className="App-Row" id="top">
           <div className="App-Login">
             <button onClick={() => this.getNowPlaying()}>
-              <a href="http://localhost:8888/login">Login to Spotify</a>
+              <a href="https://spotify-genius-lyrics.herokuapp.com/login">Login to Spotify</a>
             </button>
           </div>
 
