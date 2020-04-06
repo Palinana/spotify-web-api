@@ -1,0 +1,47 @@
+{
+  "name": "journal",
+  "version": "1.0.0",
+  "description": "lyrics app",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "build-client": "webpack",
+    "build-client-watch": "webpack -w",
+    "server": "nodemon server/index.js",
+    "client": "cd client && npm run start",
+    "start-dev": "webpack -w & nodemon server/index.js",
+    "seed": "node script/seed.js",
+    "test": "mocha ./server/**/*.spec.js ./server/**/**/*.spec.js",
+    "heroku-postbuild": "cd client && npm install && npm install --only=dev && npm run build"
+  },
+  "repository": {
+    "type": "git"
+  },
+  "author": "Palina Pasiukevich",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.17.5",
+    "concurrently": "^3.6.0"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "cookie-parser": "1.3.2",
+    "cors": "^2.8.4",
+    "dotenv": "^8.2.0",
+    "express": "^4.16.3",
+    "history": "^4.7.2",
+    "querystring": "~0.2.0",
+    "request": "~2.34.0",
+    "morgan": "^1.9.0",
+    "path": "^0.12.7",
+    "pg": "^7.4.3",
+    "pg-hstore": "^2.3.2",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.3.1",
+    "redux": "^4.0.0",
+    "redux-devtools-extension": "^2.13.4",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0"
+  }
+}
