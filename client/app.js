@@ -47,12 +47,17 @@ class App extends Component {
       result: "",
       loggedIn: token ? true : false,
       nowPlaying: { name: "Not Checked", albumArt: "" },
-      accessToken: `client_id=dCaAP65mI-95i43a6mNi0YQC1URQp1mXXgz2esWQj9R3k5F38Ep3vhfXqBxJP1Lk&client_secret=Kuya3LOdXf9BW-S828Z6b608jEumUYbbAwCoECI5M37zgdB1hE5ZeC85KvCPZaOjyYl7axVG7U9BmJSZwGrUxg&access_token=nwBKz8e1MymcySxIM5Ia4Ct5uHMURU_0R58tvzMWvmIIPZTDCpAmwMgZoqcrQUVk`
+      accessToken: `client_id=${
+        process.env.GENIUS_API_CLIENT_KEY
+      }&client_secret=${
+        process.env.GENIUS_API_CLIENT_SECRET
+      }&access_token=${process.env.ACCESS_TOKEN}`
     };
   }
 
   componentDidMount() {
     /* Auto calls for current song */
+    
     // let interval = setInterval(() => {
     //   this.getNowPlaying()
     //   console.log("waiting for the next call.");
@@ -142,7 +147,11 @@ class App extends Component {
 
           axios
             .get(
-              `https://api.genius.com/search?q=${artist}%20${song}&client_id=dCaAP65mI-95i43a6mNi0YQC1URQp1mXXgz2esWQj9R3k5F38Ep3vhfXqBxJP1Lk&client_secret=Kuya3LOdXf9BW-S828Z6b608jEumUYbbAwCoECI5M37zgdB1hE5ZeC85KvCPZaOjyYl7axVG7U9BmJSZwGrUxg&access_token=nwBKz8e1MymcySxIM5Ia4Ct5uHMURU_0R58tvzMWvmIIPZTDCpAmwMgZoqcrQUVk`
+              `https://api.genius.com/search?q=${artist}%20${song}&client_id=${
+                process.env.GENIUS_API_CLIENT_KEY
+              }&client_secret=${
+                process.env.GENIUS_API_CLIENT_SECRET
+              }&access_token=${process.env.ACCESS_TOKEN}`
             )
             .then(res => {
               let lyricsURL = res.data.response.hits[0].result.url;
