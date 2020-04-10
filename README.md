@@ -1,6 +1,6 @@
 # spotify-lyrics
 
-The app fetches the currently playing song from Spotify and displays the lyrics. The lyrics are fetched from Genius. 
+A React app that fetches the currently playing song from Spotify and displays the lyrics.
 
 ![image](https://user-images.githubusercontent.com/26104823/78945466-5ba97b80-7a8e-11ea-911a-5e7c1c7675fe.jpg)
 
