@@ -47,7 +47,7 @@
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.7",
     "node-html-parser": "^1.2.5",
     "react-html-parser": "^2.0.2",
     "spotify-web-api-js": "^0.22.1"
